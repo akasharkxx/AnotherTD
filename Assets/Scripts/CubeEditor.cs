@@ -25,18 +25,20 @@ public class CubeEditor : MonoBehaviour
     {
         int gridSize = waypointComponentCube.GetGridSize();
         transform.position = new Vector3(
-                    waypointComponentCube.GetGridPosition().x,
+                    waypointComponentCube.GetGridPosition().x * gridSize,
                     0f,
-                    waypointComponentCube.GetGridPosition().y
+                    waypointComponentCube.GetGridPosition().y * gridSize
                 );
     }
 
     private void UpdateLabelOnCube()
     {
         int gridSize = waypointComponentCube.GetGridSize();
-        string cubeCoordinate = waypointComponentCube.GetGridPosition().x / gridSize + "," + waypointComponentCube.GetGridPosition().y / gridSize;
+        string cubeCoordinate = waypointComponentCube.GetGridPosition().x + 
+                                "," + 
+                                waypointComponentCube.GetGridPosition().y;
         TextMesh cubeCoordinateLabel = GetComponentInChildren<TextMesh>();
         cubeCoordinateLabel.text = cubeCoordinate;
-        transform.name = cubeCoordinate;
+        gameObject.name = cubeCoordinate;
     }
 }

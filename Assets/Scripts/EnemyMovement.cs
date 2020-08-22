@@ -5,22 +5,24 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField]
-    private List<Waypoint> path;
+    [SerializeField][Range(0.1f, 1f)]
+    private float movementSpeed = 1f;
 
     private void Start()
     {
-        //StartCoroutine(FollowPath());
+        PathFinder pathFinderForThisEnemy = FindObjectOfType<PathFinder>();
+        List<Waypoint> pathForThisEnemy = pathFinderForThisEnemy.GetPath();
+        StartCoroutine(FollowPath(pathForThisEnemy));
     }
 
-    IEnumerator FollowPath()
+    IEnumerator FollowPath(List<Waypoint> path)
     {
         Debug.Log("Starting patrol..");
-        foreach(Waypoint waypoint in path)
+        foreach (Waypoint waypoint in path)
         {
             transform.position = waypoint.transform.position;
             Debug.Log("Visiting: " + waypoint.name);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(movementSpeed);
         }
         Debug.Log("Ending patrol");
     }
